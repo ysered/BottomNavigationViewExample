@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">BottomNavigationViewExample</string>
+
+    <!-- Bottom navigation menu -->
+    <string name="profile">Profile</string>
+    <string name="map">Map</string>
 </resources>
