@@ -7,13 +7,16 @@
     android:layout_height="match_parent"
     tools:context="com.ysered.bottomnavigationviewexample.MainActivity">
 
+    <!--<com.ysered.bottomnavigationviewexample.MyBottomNavigationView-->
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        app:elevation="0dp"
         app:itemBackground="@color/color_white"
-        app:itemIconTint="@color/color_accent"
+        app:itemIconTint="@drawable/selector_tab"
+        app:itemTextColor="@drawable/selector_tab"
         app:menu="@menu/bottom_navigation_main"/>
 
     <FrameLayout
