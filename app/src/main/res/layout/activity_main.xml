@@ -17,7 +17,7 @@
         app:itemBackground="@color/color_white"
         app:itemIconTint="@drawable/selector_tab"
         app:itemTextColor="@drawable/selector_tab"
-        app:menu="@menu/bottom_navigation_main"/>
+        app:menu="@menu/tabs"/>
 
     <FrameLayout
         android:id="@+id/containerFrame"
