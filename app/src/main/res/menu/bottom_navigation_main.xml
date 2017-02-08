@@ -2,15 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/item_user"
-        android:enabled="true"
+        android:id="@+id/itemProfile"
         android:icon="@drawable/ic_profile"
-        android:title="@null"
+        android:title="Profile"
         app:showAsAction="always"/>
     <item
-        android:id="@+id/item_map"
-        android:enabled="true"
+        android:id="@+id/itemMap"
         android:icon="@drawable/ic_map"
-        android:title="@null"
+        android:title="Map"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/itemDashboard"
+        android:icon="@drawable/ic_dashboard"
+        android:title="Dashboard"
         app:showAsAction="always"/>
 </menu>

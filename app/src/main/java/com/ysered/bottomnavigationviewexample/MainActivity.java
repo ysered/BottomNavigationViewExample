@@ -2,10 +2,10 @@ package com.ysered.bottomnavigationviewexample;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,13 +17,22 @@ public class MainActivity extends AppCompatActivity {
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment fragment = null;
                 switch (item.getItemId()) {
-                    case R.id.item_user:
-                        Toast.makeText(MainActivity.this, "Profile", Toast.LENGTH_SHORT).show();
+                    case R.id.itemProfile:
+                        fragment = new ProfileFragment();
                         break;
-                    case R.id.item_map:
-                        Toast.makeText(MainActivity.this, "Map", Toast.LENGTH_SHORT).show();
+                    case R.id.itemMap:
+                        fragment = new MapFragment();
                         break;
+                    case R.id.itemDashboard:
+                        fragment = new DashboardFragment();
+                        break;
+                }
+                if (fragment != null) {
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.containerFrame, fragment)
+                            .commit();
                 }
                 return true;
             }
