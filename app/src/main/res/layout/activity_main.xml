@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     tools:context="com.ysered.bottomnavigationviewexample.MainActivity">
 
-
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigationView"
         android:layout_width="match_parent"
@@ -16,5 +15,11 @@
         app:itemBackground="@color/color_white"
         app:itemIconTint="@color/color_accent"
         app:menu="@menu/bottom_navigation_main"/>
+
+    <FrameLayout
+        android:id="@+id/containerFrame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/navigationView"/>
 
 </RelativeLayout>
