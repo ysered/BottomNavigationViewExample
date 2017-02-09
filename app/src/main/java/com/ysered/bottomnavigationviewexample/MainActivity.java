@@ -1,15 +1,17 @@
 package com.ysered.bottomnavigationviewexample;
 
+import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.util.SparseArrayCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.view.menu.MenuView;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -67,5 +69,21 @@ public class MainActivity extends AppCompatActivity {
             transaction.addToBackStack(null);
         }
         transaction.commit();
+    }
+
+    private void removeTextLabel(@NonNull BottomNavigationView bottomNavigationView, @IdRes int menuItemId) {
+        final View view = bottomNavigationView.findViewById(menuItemId);
+        if (view == null) {
+            return;
+        }
+        if (view instanceof MenuView.ItemView) {
+            FrameLayout layout = (FrameLayout) view;
+            for (int i = 0; i < layout.getChildCount(); i++) {
+                View v = layout.getChildAt(i);
+                if (v instanceof ViewGroup) {
+                    layout.removeViewAt(i);
+                }
+            }
+        }
     }
 }
