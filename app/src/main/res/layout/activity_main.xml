@@ -13,8 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:background="@color/color_white"
         app:elevation="0dp"
-        app:itemBackground="@color/color_white"
         app:itemIconTint="@drawable/selector_tab"
         app:itemTextColor="@drawable/selector_tab"
         app:menu="@menu/tabs"/>
