@@ -11,17 +11,15 @@ import android.view.ViewGroup;
 
 public class DashboardFragment extends Fragment {
 
-    private ViewPager viewPager;
+    private PagerAdapter adapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
-
-        viewPager = (ViewPager) view.findViewById(R.id.viewPager);
-        PagerAdapter adapter = new DashboardPagerAdapter(getActivity().getSupportFragmentManager());
+        final ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewPager);
+        adapter = new DashboardPagerAdapter(getChildFragmentManager());
         viewPager.setAdapter(adapter);
-
         return view;
     }
 }

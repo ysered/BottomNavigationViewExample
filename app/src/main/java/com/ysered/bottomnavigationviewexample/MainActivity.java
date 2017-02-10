@@ -1,55 +1,44 @@
 package com.ysered.bottomnavigationviewexample;
 
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.util.SparseArrayCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.menu.MenuView;
+import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = MainActivity.class.getSimpleName();
 
-    //private static final int TAB_COUNT = 3;
+    private static final int TAB_COUNT = 3;
 
-    //final SparseArrayCompat<Fragment> fragments = new SparseArrayCompat<>(TAB_COUNT);
+    final SparseArrayCompat<Fragment> fragments = new SparseArrayCompat<>(TAB_COUNT);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final Fragment fragment = new ProfileFragment();
-        loadFragment(fragment);
+        if (fragments.size() == 0) {
+            fragments.put(R.id.itemProfile, new ProfileFragment());
+            fragments.put(R.id.itemMap, new MapFragment());
+            fragments.put(R.id.itemDashboard, new DashboardFragment());
+        }
+        loadFragment(fragments.get(R.id.itemProfile));
 
-        /*fragments.put(R.id.itemProfile, fragment);
-        fragments.put(R.id.itemMap, new MapFragment());
-        // FIXME: image views shows when fragment created once
-        fragments.put(R.id.itemDashboard, new DashboardFragment());*/
 
         final BottomNavigationView navigationView = (BottomNavigationView) findViewById(R.id.navigationView);
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Fragment fragment = null;
-                switch (item.getItemId()) {
-                    case R.id.itemProfile:
-                        fragment = new ProfileFragment();
-                        break;
-                    case R.id.itemMap:
-                        fragment = new MapFragment();
-                        break;
-                    case R.id.itemDashboard:
-                        fragment = new DashboardFragment();
-                        break;
-                }
+                final Fragment fragment = fragments.get(item.getItemId());
                 if (fragment != null) {
                     loadFragment(fragment);
+                } else {
+                    Log.d(TAG, "No fragment for menu item: " + item.getItemId());
                 }
                 return true;
             }
@@ -69,21 +58,5 @@ public class MainActivity extends AppCompatActivity {
             transaction.addToBackStack(null);
         }
         transaction.commit();
-    }
-
-    private void removeTextLabel(@NonNull BottomNavigationView bottomNavigationView, @IdRes int menuItemId) {
-        final View view = bottomNavigationView.findViewById(menuItemId);
-        if (view == null) {
-            return;
-        }
-        if (view instanceof MenuView.ItemView) {
-            FrameLayout layout = (FrameLayout) view;
-            for (int i = 0; i < layout.getChildCount(); i++) {
-                View v = layout.getChildAt(i);
-                if (v instanceof ViewGroup) {
-                    layout.removeViewAt(i);
-                }
-            }
-        }
     }
 }
