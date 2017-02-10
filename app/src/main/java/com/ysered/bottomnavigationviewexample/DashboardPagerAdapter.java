@@ -2,14 +2,14 @@ package com.ysered.bottomnavigationviewexample;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.util.SparseArrayCompat;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
-public class DashboardPagerAdapter extends FragmentStatePagerAdapter {
+public class DashboardPagerAdapter extends FragmentPagerAdapter {
+
+    private static final String TAG = DashboardPagerAdapter.class.getSimpleName();
 
     private static final int COUNT = 2;
-
-    private SparseArrayCompat<Fragment> fragments = new SparseArrayCompat<>(COUNT);
 
     public DashboardPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -17,10 +17,15 @@ public class DashboardPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        Fragment fragment = fragments.get(position);
-        if (fragment == null) {
-            fragment = ImageSlideFragment.getInstance(position);
-            fragments.append(position, fragment);
+        Fragment fragment;
+        switch (position) {
+            case 0:
+            case 1:
+                fragment = ImageSlideFragment.getInstance(position);
+                break;
+            default:
+                fragment = null;
+                Log.e(TAG, "No fragment for position: " + position);
         }
         return fragment;
     }
