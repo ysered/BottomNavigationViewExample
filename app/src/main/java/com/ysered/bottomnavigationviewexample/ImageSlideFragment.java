@@ -8,8 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class ImageSlideFragment extends Fragment {
+    private static final String TAG = ImageSlideFragment.class.getSimpleName();
 
     private static final String ARG_IMAGE_INDEX = "arg_image_index";
     private static final int[] IMAGE_RESOURCES = {
@@ -17,6 +19,7 @@ public class ImageSlideFragment extends Fragment {
             R.drawable.android02
     };
 
+    private int imageIndex;
     private @DrawableRes int imageResource;
 
     public static ImageSlideFragment getInstance(int position) {
@@ -32,8 +35,8 @@ public class ImageSlideFragment extends Fragment {
         super.onCreate(savedInstanceState);
         final Bundle args = getArguments();
         if (args != null) {
-            final int index = args.getInt(ARG_IMAGE_INDEX);
-            imageResource = IMAGE_RESOURCES[index];
+            imageIndex = args.getInt(ARG_IMAGE_INDEX);
+            imageResource = IMAGE_RESOURCES[imageIndex];
         }
     }
 
@@ -42,8 +45,11 @@ public class ImageSlideFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_image_slide, container, false);
 
-        final ImageView imageSlide = (ImageView) view.findViewById(R.id.slideImage);
-        imageSlide.setImageResource(imageResource);
+        final ImageView slideImage = (ImageView) view.findViewById(R.id.slideImage);
+        final TextView slideText = (TextView) view.findViewById(R.id.slideText);
+
+        slideImage.setImageResource(imageResource);
+        slideText.setText(String.format("Slide %s", (imageIndex + 1)));
 
         return view;
     }
