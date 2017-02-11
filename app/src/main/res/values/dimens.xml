@@ -2,8 +2,10 @@
     <dimen name="margin_default">16dp</dimen>
     <dimen name="margin_large">24dp</dimen>
     <dimen name="margin_extra_small">4dp</dimen>
+    <dimen name="margin_2dp">2dp</dimen>
 
+    <dimen name="indicator_bounds">10dp</dimen>
     <dimen name="indicator_oval">6dp</dimen>
-    <dimen name="indicator_oval_selected">10dp</dimen>
-    <dimen name="indicator_margin">@dimen/margin_extra_small</dimen>
+    <dimen name="indicator_oval_selected">@dimen/indicator_bounds</dimen>
+    <dimen name="indicator_margin">@dimen/margin_2dp</dimen>
 </resources>

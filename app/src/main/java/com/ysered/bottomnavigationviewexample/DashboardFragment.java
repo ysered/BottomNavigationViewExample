@@ -6,9 +6,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -59,21 +61,32 @@ public class DashboardFragment extends Fragment implements ViewPager.OnPageChang
      */
     private void initIndicators(int count) {
         final int indicatorMargin = (int) getResources().getDimension(R.dimen.indicator_margin);
+        final int indicatorBounds = (int) getResources().getDimension(R.dimen.indicator_bounds);
+
         indicatorImages = new ImageView[count];
         for (int i = 0; i < count; i++) {
+            // create ImageView
             final ImageView indicatorImage = new ImageView(getContext());
-            final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            FrameLayout.LayoutParams imageParams = new FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.WRAP_CONTENT,
+                    FrameLayout.LayoutParams.WRAP_CONTENT);
+            imageParams.gravity = Gravity.CENTER;
+            indicatorImage.setLayoutParams(imageParams);
+
+            // create FrameLayout and put ImageView inside it
+            final FrameLayout indicatorFrame = new FrameLayout(getContext());
+            indicatorFrame.addView(indicatorImage);
+            final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(indicatorBounds, indicatorBounds);
             params.setMargins(indicatorMargin, 0, indicatorMargin, 0);
-            indicatorImage.setLayoutParams(params);
+            indicatorFrame.setLayoutParams(params);
+
             if (i == currentPosition) {
                 indicatorImage.setImageResource(R.drawable.ic_indicator_selected);
             } else {
                 indicatorImage.setImageResource(R.drawable.ic_indicator);
             }
             indicatorImages[i] = indicatorImage;
-            indicatorLayout.addView(indicatorImage);
+            indicatorLayout.addView(indicatorFrame);
         }
     }
 
