@@ -9,7 +9,7 @@ public class DashboardPagerAdapter extends FragmentPagerAdapter {
 
     private static final String TAG = DashboardPagerAdapter.class.getSimpleName();
 
-    private static final int COUNT = 2;
+    private static final int COUNT = 10;
 
     public DashboardPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -18,14 +18,10 @@ public class DashboardPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         Fragment fragment;
-        switch (position) {
-            case 0:
-            case 1:
-                fragment = ImageSlideFragment.getInstance(position);
-                break;
-            default:
-                fragment = null;
-                Log.e(TAG, "No fragment for position: " + position);
+        if (position >= 0 && position < COUNT) {
+            fragment = ImageSlideFragment.getInstance(position);
+        } else {
+            fragment = null;
         }
         return fragment;
     }

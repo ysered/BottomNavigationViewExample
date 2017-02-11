@@ -16,6 +16,14 @@ public class ImageSlideFragment extends Fragment {
     private static final String ARG_IMAGE_INDEX = "arg_image_index";
     private static final int[] IMAGE_RESOURCES = {
             R.drawable.android01,
+            R.drawable.android02,
+            R.drawable.android01,
+            R.drawable.android02,
+            R.drawable.android01,
+            R.drawable.android02,
+            R.drawable.android01,
+            R.drawable.android02,
+            R.drawable.android01,
             R.drawable.android02
     };
 
