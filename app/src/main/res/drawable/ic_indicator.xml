@@ -6,5 +6,5 @@
     <size
         android:width="@dimen/indicator_oval"
         android:height="@dimen/indicator_oval"/>
-    <solid android:color="@color/color_primary"/>
+    <solid android:color="@color/color_gray"/>
 </shape>
