@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ViewPagerIndicator">
+        <attr name="indicator_drawable" format="integer"/>
+        <attr name="selected_indicator_drawable" format="integer"/>
+        <attr name="indicator_margin" format="dimension"/>
+    </declare-styleable>
+</resources>

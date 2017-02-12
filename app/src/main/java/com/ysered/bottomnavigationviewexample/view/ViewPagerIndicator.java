@@ -1,11 +1,10 @@
 package com.ysered.bottomnavigationviewexample.view;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
 import android.view.Gravity;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -18,6 +17,10 @@ public class ViewPagerIndicator extends LinearLayout {
 
     private int count;
     private int current = 0;
+    private @DrawableRes int imageResource;
+    private @DrawableRes int selectedImageResource;
+    private int margin;
+
     private List<ImageView> indicatorImages;
 
     public ViewPagerIndicator(Context context) {
@@ -28,11 +31,13 @@ public class ViewPagerIndicator extends LinearLayout {
     public ViewPagerIndicator(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
+        applyAttributes(attrs);
     }
 
     public ViewPagerIndicator(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
+        applyAttributes(attrs);
     }
 
     public void setCount(int count) {
@@ -58,8 +63,18 @@ public class ViewPagerIndicator extends LinearLayout {
         setOrientation(HORIZONTAL);
     }
 
+    private void applyAttributes(AttributeSet attrs) {
+        final TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.ViewPagerIndicator);
+        imageResource = typedArray.getResourceId(R.styleable.ViewPagerIndicator_indicator_drawable, R.drawable.ic_indicator);
+        selectedImageResource = typedArray.getResourceId(R.styleable.ViewPagerIndicator_selected_indicator_drawable,
+                R.drawable.ic_indicator_selected);
+        margin = (int) typedArray.getDimension(R.styleable.ViewPagerIndicator_indicator_margin,
+                getResources().getDimension(R.dimen.indicator_margin));
+        typedArray.recycle();
+    }
+
     /**
-     * Creates and initializes list of indicator images {@link #indicatorImages} and adds to layout.
+     * Creates and initializes list of indicator images {@link #indicatorImages} and adds them to layout.
      * Sets different images for selected and unselected pages.
      */
     private void initIndicators(int count) {
@@ -67,34 +82,20 @@ public class ViewPagerIndicator extends LinearLayout {
             throw new IllegalArgumentException("Indicator count should be > 0");
         }
 
-        final Resources resources = getResources();
-        final int indicatorMargin = (int) resources.getDimension(R.dimen.indicator_margin);
-        final int indicatorBounds = (int) resources.getDimension(R.dimen.indicator_bounds);
-
         indicatorImages = new ArrayList<>(count);
         for (int i = 0; i < count; i++) {
-            // create ImageView
             final ImageView indicatorImage = new ImageView(getContext());
-            FrameLayout.LayoutParams imageParams = new FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.WRAP_CONTENT,
-                    FrameLayout.LayoutParams.WRAP_CONTENT);
-            imageParams.gravity = Gravity.CENTER;
-            indicatorImage.setLayoutParams(imageParams);
-
-            // create FrameLayout and put ImageView inside it
-            final FrameLayout indicatorFrame = new FrameLayout(getContext());
-            indicatorFrame.addView(indicatorImage);
-            final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(indicatorBounds, indicatorBounds);
-            params.setMargins(indicatorMargin, 0, indicatorMargin, 0);
-            indicatorFrame.setLayoutParams(params);
+            final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+            params.setMargins(margin, 0, margin, 0);
+            indicatorImage.setLayoutParams(params);
 
             if (i == current) {
-                indicatorImage.setImageResource(R.drawable.ic_indicator_selected);
+                indicatorImage.setImageResource(selectedImageResource);
             } else {
-                indicatorImage.setImageResource(R.drawable.ic_indicator);
+                indicatorImage.setImageResource(imageResource);
             }
             indicatorImages.add(indicatorImage);
-            addView(indicatorFrame);
+            addView(indicatorImage);
         }
     }
 
@@ -105,13 +106,8 @@ public class ViewPagerIndicator extends LinearLayout {
      */
     private void updateIndicators(int newPosition) {
         final ImageView oldImage = indicatorImages.get(current);
-        oldImage.setImageResource(R.drawable.ic_indicator);
-        ObjectAnimator.ofFloat(oldImage, "scaleX", 1.6f, 1f).setDuration(200).start();
-        ObjectAnimator.ofFloat(oldImage, "scaleY", 1.6f, 1f).setDuration(200).start();
-
         final ImageView newImage = indicatorImages.get(newPosition);
-        newImage.setImageResource(R.drawable.ic_indicator_selected);
-        ObjectAnimator.ofFloat(newImage, "scaleX", 0.6f, 1f).setDuration(200).start();
-        ObjectAnimator.ofFloat(newImage, "scaleY", 0.6f, 1f).setDuration(200).start();
+        oldImage.setImageResource(imageResource);
+        newImage.setImageResource(selectedImageResource);
     }
 }
